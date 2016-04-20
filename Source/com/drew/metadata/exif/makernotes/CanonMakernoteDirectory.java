@@ -677,21 +677,44 @@ public class CanonMakernoteDirectory extends Directory
         // Otherwise just add as usual.
         switch (tagType) {
             case TAG_CAMERA_SETTINGS_ARRAY: {
-                int[] ints = (int[])array;
-                for (int i = 0; i < ints.length; i++)
-                    setInt(CameraSettings.OFFSET + i, ints[i]);
+                if (array instanceof short[]) {
+                    short[] shorts = (short[])array;
+                    for (int i = 0; i < shorts.length; i++)
+                        setInt(CameraSettings.OFFSET + i, (int)shorts[i]);
+                } else {
+                    int[] ints = (int[])array;
+                    for (int i = 0; i < ints.length; i++)
+                        setInt(CameraSettings.OFFSET + i, ints[i]);
+                }
                 break;
             }
+
             case TAG_FOCAL_LENGTH_ARRAY: {
-                int[] ints = (int[])array;
-                for (int i = 0; i < ints.length; i++)
-                    setInt(FocalLength.OFFSET + i, ints[i]);
+				if (array instanceof byte[]) {
+					byte[] bytes = (byte[])array;
+					for (int i = 0; i < shorts.length; i++)
+						setInt(FocalLength.OFFSET + i, (int)bytes[i]);
+				else if (array instanceof short[]) {
+					short[] shorts = (short[])array;
+					for (int i = 0; i < shorts.length; i++)
+						setInt(FocalLength.OFFSET + i, (int)shorts[i]);
+				} else if (array instanceof int[]) {
+					int[] ints = (int[])array;
+					for (int i = 0; i < ints.length; i++)
+						setInt(FocalLength.OFFSET + i, ints[i]);
+				}
                 break;
             }
             case TAG_SHOT_INFO_ARRAY: {
-                int[] ints = (int[])array;
-                for (int i = 0; i < ints.length; i++)
-                    setInt(ShotInfo.OFFSET + i, ints[i]);
+                if (array instanceof long[]) {
+                    long[] longs = (long[])array;
+                    for (int i = 0; i < longs.length; i++)
+                        setLong(ShotInfo.OFFSET + i, longs[i]);
+                } else {
+                    int[] ints = (int[])array;
+                    for (int i = 0; i < ints.length; i++)
+                        setInt(ShotInfo.OFFSET + i, ints[i]);
+                }
                 break;
             }
             case TAG_PANORAMA_ARRAY: {
